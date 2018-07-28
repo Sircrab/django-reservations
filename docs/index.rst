@@ -15,13 +15,6 @@ Welcome to nora's documentation!
    contents/settings
    contents/usage
 
-.. toctree::
-  :maxdepth: 1
-  :caption: Sidenotes:
-
-  contents/notes
-
-
 
 Indices and tables
 ==================
