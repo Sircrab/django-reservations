@@ -11,14 +11,14 @@ This is an implementation for a Django reservations app, it was developed in Dja
 
 It features a simple chef/user account systems which allows for:
 
-###Chefs:
+### Chefs:
 - Create and Edit menus
 - See user's orders
 - Notify users via emails or Slack channel of a new menu (Async)
 - Generate links which allow users to order from a menu.
 - Limit the hour in which menus can be ordered.
 
-###Users:
+### Users:
 - Order from menus
 - Add comments and choose the size of their meals.
 - See their previous orders (but not other user's)
