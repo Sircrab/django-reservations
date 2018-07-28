@@ -1,0 +1,15 @@
+{% extends 'reservations/base.html' %}
+{% load bootstrap3 %}
+{% load bootstrap_dynamic_formsets %}
+{% block content %}
+  {% for error in menu_item_form.non_form_errors %}
+    {{error}}
+  {% endfor %}
+  <form role="form" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_dynamic_formset menu_item_form can_delete=True layout="horizontal"%}
+    <button type="submit" id="form-submit" class="btn btn-success">Confirmar cambios</button>
+  </form>
+
+{% endblock content %}

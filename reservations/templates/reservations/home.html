@@ -1,0 +1,86 @@
+{% extends 'reservations/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if today_menu %}
+  <h2>Menú del dia</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Menú</th>
+        <th>Fecha de publicación</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for menu in today_menu %}
+      <tr>
+        <td><a href="{% url 'menu' unique_id=menu.unique_id %}">{{menu.menu_title}}</a></td>
+        <td>{{menu.created}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<h2>Aún no se ha públicado un menú para el dia de hoy</h2>
+{% endif %}
+{% if menus %}
+  <h2>Menus anteriores</h2>
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Menú</th>
+      <th>Fecha de publicación</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for menu in menus %}
+      <tr>
+        <td><a href="{% url 'menu' unique_id=menu.unique_id %}">{{menu.menu_title}}</a></td>
+        <td>{{menu.created}}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{page_obj.previous_page_number}}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}    
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% else %}
+<h2>No hay ningún menu anterior aún</h2>
+{% endif %}
+
+
+{% if user.is_authenticated %}
+  {% if  user.is_chef %}
+    <h1>Bienvenido usuario chef!</h1>
+    </br>
+    {% if not today_menu %}
+      ¡Aún no hay ningún menú para el dia de hoy {% now "j F Y" %}!
+      <a href="{% url 'new_menu' %}" class="btn btn-info" role="button">Crear uno</a>
+    {% endif %}
+  {% else %}
+    <h1>Bienvenido usuario cliente!</h1>
+  {% endif %}
+{% else %}
+<h1>Bienvenido al sistema de almuerzos!</h1>
+{% endif %}
+
+{% endblock content %}

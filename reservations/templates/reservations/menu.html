@@ -1,0 +1,41 @@
+{% extends 'reservations/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<h2>{{menu.menu_title}}</h2>
+  <h3>Menú del dia: {{ menu.created|date:'j F Y' }}</h3>
+  <table class="table">
+    <thead>
+      <th>Opciones</th>
+    </thead>
+    <tbody>
+      {% for item in menu_items %}
+        <tr>
+          <td>{{item.item_text}}</td>
+        </tr>       
+      {% endfor %}
+    </tbody>
+  </table>
+{% if user.is_authenticated %}
+  {% if user.is_chef %}
+    <a class="btn btn-primary" href="{% url 'menu_orders' unique_id=menu.unique_id %}" role="button">
+      Ver ordenes
+    </a>
+    <a class="btn btn-success" href="{% url 'edit_menu' unique_id=menu.unique_id %}" role="button">
+        <span class="glyphicon glyphicon-edit">Editar</span>
+    </a>
+  {% else %}
+    {% if not menu.published_today or not in_order_time%}
+      ¡Ya pasó el tiempo para pedir de este menú!
+    {% elif order %}
+      ¡Usted ya ordenó de este menú!
+    {% else %}
+      <a class="btn btn-primary" href="{% url 'new_order' unique_id=menu.unique_id %}" role="button">
+        <span class="glyphicon glyphicon-shopping-cart">Ordenar</span>
+      </a>
+    {% endif %}
+  {% endif %}
+{% else %}     
+  ¡Identificate para poder ordenar!
+{% endif %}
+{% endblock content %}

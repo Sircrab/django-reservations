@@ -1,0 +1,58 @@
+{% extends 'reservations/base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <h2>Ordenes anteriores de: {{req_user.get_username}}</h2>
+  {% if orders.object_list.all %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Menú</th>
+          <th>Opción de menú</th>
+          <th>Tamaño de menú</th>
+          <th>Comentarios</th>
+          <th>Fecha</th>
+        </tr>     
+      </thead>
+      <tbody>
+        {% for order in orders %}
+          <tr>
+            <td>{{order.item_choice.menu}}</td>
+            <td>{{order.item_choice}}</td>
+            <td>{{order.get_size_display}}</td>
+            <td>{{order.comments}}</td>
+            <td>{{order.created}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if orders.has_other_pages %}
+      <ul class="pagination">
+        {% if orders.has_previous %}
+          <li><a href="?page={{ orders.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in orders.paginator.page_range %}
+          {% if orders.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if orders.has_next %}
+          <li><a href="?page={{ orders.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+  {% else %}
+    <h3>Sin ordenes aún</h3>
+  {% endif %}
+{% else %}
+<h2>¡Usted no tiene autorización para ver esta página!</h2>
+{% endif %}
+
+{% endblock content %}

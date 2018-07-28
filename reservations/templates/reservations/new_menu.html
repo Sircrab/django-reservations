@@ -1,0 +1,21 @@
+{% extends 'reservations/base.html' %}
+{% load bootstrap3 %}
+{% load bootstrap_dynamic_formsets %}
+{% block content %}
+  {% for error in menu_item_form.non_form_errors %}
+    {{error}}
+  {% endfor %}
+  <form role="form" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_dynamic_formset menu_item_form can_delete=True layout="horizontal"%}
+    <div class="checkbox">
+      <label><input type="checkbox" name="notify_mail">¿Desea notificar este menú por correo?</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="notify_slack">¿Desea notificar este menú por el canal de Slack?</label>
+    </div>
+    <button type="submit" id="form-submit" class="btn btn-success">Crear</button>
+  </form>
+
+{% endblock content %}
