@@ -6,7 +6,7 @@ billiard==3.5.0.4
 celery==4.2.1
 certifi==2018.4.16
 chardet==3.0.4
-Django==2.1b1
+Django==2.2.24
 django-appconf==1.0.2
 django-bootstrap-dynamic-formsets==0.5.0
 django-bootstrap3==10.0.1
