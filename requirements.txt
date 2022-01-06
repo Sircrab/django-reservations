@@ -3,7 +3,7 @@ amqp==2.3.2
 anyjson==0.3.3
 Babel==2.6.0
 billiard==3.5.0.4
-celery==4.2.1
+celery==5.2.2
 certifi==2018.4.16
 chardet==3.0.4
 Django==2.1b1
